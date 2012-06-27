@@ -9,6 +9,8 @@ Changelog:
 ----------
 	- 0.0.1 -
 		Initial version, based on NoRSX for PS3 version 0.1.1e
+	- 0.0.2 -
+		Added MSG Dialog
 
 Homebrews built with this lib:
 ------------------------------
