@@ -1,4 +1,4 @@
-OBJS   =	Lib/Image.cpp Lib/Background.cpp  Lib/rsxutil.cpp Lib/Bitmap.cpp Lib/NoRSX.cpp Lib/Font.cpp Lib/Min.cpp Lib/Objects.cpp main.cpp  Lib/pngdec.cpp Lib/jpgdec.cpp
+OBJS   =	Lib/Image.cpp Lib/Background.cpp  Lib/rsxutil.cpp Lib/Bitmap.cpp Lib/NoRSX.cpp Lib/Font.cpp Lib/Min.cpp Lib/Objects.cpp main.cpp  Lib/pngdec.cpp Lib/jpgdec.cpp Lib/Msg.cpp
 
 #OBJS +=	Lib/Msg.cpp
 

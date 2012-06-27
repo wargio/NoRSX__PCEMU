@@ -44,8 +44,9 @@ typedef struct
 
 /* Flip a buffer onto the screen. Returns TRUE on success */
 int flip();
+int flip(SDL_Surface *a);
 /* Create a buffer to draw into and assign it to @id. Returns NULL on error */
-int makeBuffer (rsxBuffer * buffer, u16 width, u16 height, int id);
+int makeBuffer (rsxBuffer * buffer, u16 width, u16 height, SDL_Surface *id);
 /* Get current screen resolution. returns TRUE on success */
 int getResolution (u16 *width, u16 *height);
 /* Initilize the RSX properly. Returns NULL on error */

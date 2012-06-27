@@ -26,7 +26,7 @@
 #include "rsxutil.h"
 #define flags		SDL_HWSURFACE
 
-#define VERSION		"0.1"
+#define VERSION		"0.0.2"
 
 char APP[300];
 static SDL_Surface *video;
@@ -36,8 +36,11 @@ int flip(){
 	SDL_Flip(video);
 }
 
+int flip(SDL_Surface *a){
+	SDL_Flip(a);
+}
 
-int makeBuffer(rsxBuffer * buffer, u16 width, u16 height, int id){
+int makeBuffer(rsxBuffer * buffer, u16 width, u16 height, SDL_Surface *id){
 	SDL_Init(SDL_INIT_EVERYTHING);
 	atexit(SDL_Quit);
 	video = SDL_SetVideoMode(width, height, 32, flags);
@@ -56,7 +59,7 @@ int makeBuffer(rsxBuffer * buffer, u16 width, u16 height, int id){
 
 	buffer->width = width;
 	buffer->height = height;
-	buffer->id = id;
+	id = video;
 
 	return 0;
 

@@ -24,7 +24,7 @@ NoRSX::NoRSX(){
 	currentBuffer = 0;
 	getResolution(&width,&height);
 	for(int i=0;i<2;i++)
-		makeBuffer(&buffers[i],width,height,i);
+		makeBuffer(&buffers[i],width,height,a);
 	flip();
 }
 
@@ -51,7 +51,7 @@ NoRSX::NoRSX(int id_type){
 	}
 
 	for(int i=0;i<2;i++)
-		makeBuffer(&buffers[i],width,height,i);
+		makeBuffer(&buffers[i],width,height,a);
 	flip();
 }
 

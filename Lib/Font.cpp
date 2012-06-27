@@ -119,16 +119,7 @@ Font::Font(const char *Font_Path, Minimum *min){
 
 Font::Font(const int ID, Minimum *min){
 	const char *Font_Path;
-	if(ID==JPN)
-		Font_Path = "/dev_flash/data/font/SCE-PS3-NR-R-JPN.TTF";
-	else if(ID==KOR)	
-		Font_Path = "/dev_flash/data/font/SCE-PS3-YG-R-KOR.TTF";
-	else if(ID==CGB)
-		Font_Path = "/dev_flash/data/font/SCE-PS3-DH-R-CGB.TTF";
-	else if(ID==KANA)
-		Font_Path =  "/dev_flash/data/font/SCE-PS3-CP-R-KANA.TTF";
-	else
-		Font_Path = "/dev_flash/data/font/SCE-PS3-VR-R-LATIN2.TTF";
+	Font_Path = "Lib/Sans.ttf";
 
 	FontColor = COLOR_BLACK;
 	FontSize = DEFAULT_FONT_SIZE;
@@ -410,8 +401,7 @@ void Font::FontDrawBitmapToBitmap(FT_Bitmap *bitmap, NoRSX_Bitmap* bmap, s32 off
 		if(x >= (s32)M_width)break;
 		for(y = top, j = 0;y < y_max;y++, j++ ){
 			if(y >= (s32) M_height) break;
-			color = bitmap->buffer[bitmap->width * j + i];
-			if(CHROMAKEY!=color)
+			if(CHROMAKEY!=bitmap->buffer[bitmap->width * j + i])
 				*(bmap->bitmap + m->width * y + x) = FontColor;
 		}
 	}

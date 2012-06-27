@@ -15,7 +15,7 @@
  This program was created by Grazioli Giovanni Dante <wargio@libero.it>.
 */
 
-#include "source/NoRSX.h"
+#include "Lib/NoRSX.h"
 #include <time.h>
 #include <stdio.h>
 
@@ -27,12 +27,13 @@ MSG Dialog is not ready to be released
 
 s32 main(s32 argc, const char* argv[]){
 	
-	NoRSX *GFX = new NoRSX(); //set defined screen resolution You can change it to: 
+	NoRSX *GFX = new NoRSX(RESOLUTION_720x480); //set defined screen resolution You can change it to: 
 					             //RESOLUTION_720x480 | RESOLUTION_720x576 | RESOLUTION_1280x720 | RESOLUTION_1920x1080
 	Background BG(GFX);
 	Object OBJ(GFX);
 	Bitmap BMap(GFX);
 	Image IMG(GFX);
+	MsgDialog K(GFX);
 
 	NoRSX_Bitmap Precalculated_Layer;	
 	pngData png;
@@ -66,30 +67,22 @@ s32 main(s32 argc, const char* argv[]){
 			}
 			if( event.type == SDL_KEYDOWN){
 				switch( event.key.keysym.sym){
-					case SDLK_RETURN: return 1;
 					case SDLK_ESCAPE:{
-						return 1;
-						break;
+						goto end;
 					}
+
 				}
 			}
 		}
 
 		BMap.DrawBitmap(&Precalculated_Layer);
-/*		BG.Mono(0xb4e83a); //a green hex color (you can use hex colors insted of COLOR_XXXXXXX)
-		IMG.DrawIMG(imgX,imgY,&png);
-		OBJ.Circle(500,500,50,COLOR_YELLOW);
-
-		F1.Printf(150,200,COLOR_RED,"Screen %d x %d",GFX->width,GFX->height);
-		F1.Printf(150,250,COLOR_BLUE, 35,"Press X to exit!");
-		F1.Printf(150,100,"FPS %f", fps);
-		F2.Printf(150,300,COLOR_GREEN,20,"FreeType2 with TTF support :)");
-*/
 		F2.Printf(50,400,"FPS %f", fps);
 
 		GFX->Flip();
 		frame ++;
 	}
+end:
+	K.Dialog(MSG_DIALOG_BTN_TYPE_YESNO,"cool MSG Dialog works! Press Y to exit! deroad is cool");
 
 	//You need to clean the Bitmap before exit
 	BMap.ClearBitmap(&Precalculated_Layer);
