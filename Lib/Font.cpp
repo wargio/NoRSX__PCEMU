@@ -284,7 +284,7 @@ void Font::FontDrawBitmap(FT_Bitmap *bitmap, s32 offset, s32 top){
 		for(y = top, j = 0; y < y_max; y++, j++){
 			if(y >= (s32)M_height) break;
 			color = bitmap->buffer[bitmap->width * j + i];
-			if(CHROMAKEY==color)
+			if(CHROMAKEY!=color)
 				*(m->buffers[m->currentBuffer].ptr + m->width * y + x) = FontColor;
 		}
 	}
@@ -411,7 +411,7 @@ void Font::FontDrawBitmapToBitmap(FT_Bitmap *bitmap, NoRSX_Bitmap* bmap, s32 off
 		for(y = top, j = 0;y < y_max;y++, j++ ){
 			if(y >= (s32) M_height) break;
 			color = bitmap->buffer[bitmap->width * j + i];
-			if(CHROMAKEY==color)
+			if(CHROMAKEY!=color)
 				*(bmap->bitmap + m->width * y + x) = FontColor;
 		}
 	}

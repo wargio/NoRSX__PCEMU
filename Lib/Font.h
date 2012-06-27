@@ -33,7 +33,9 @@
 #include FT_SYNTHESIS_H
 #include FT_STROKER_H
 
-#define CHROMAKEY		0x000000ff
+//#define CHROMAKEY		0x000000ff
+#define CHROMAKEY		0x00000000
+
 #define DEFAULT_FONT_SIZE	40
 
 #define LATIN2			0
@@ -65,7 +67,7 @@ public:
 	void PrintfToBitmap(u32 x, u32 y, NoRSX_Bitmap* bmap,const char *a, ...);
 	void PrintfToBitmap(u32 x, u32 y, NoRSX_Bitmap* bmap, u32 Color,const char *a, ...);
 	void PrintfToBitmap(u32 x, u32 y, NoRSX_Bitmap* bmap, u32 Color, u32 Size,const char *a, ...);
-
+	
 protected:
 	bool Kerning;
 	FT_Byte *Pointer;
