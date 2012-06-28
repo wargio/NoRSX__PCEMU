@@ -24,7 +24,7 @@ static int exitapp, xmbopen;
 
 s32 main(s32 argc, const char* argv[]){
 	
-	NoRSX *GFX = new NoRSX(RESOLUTION_720x480); //set defined screen resolution You can change it to: 
+	NoRSX *GFX = new NoRSX(RESOLUTION_1280x720); //set defined screen resolution You can change it to: 
 					             //RESOLUTION_720x480 | RESOLUTION_720x576 | RESOLUTION_1280x720 | RESOLUTION_1920x1080
 	Background BG(GFX);
 	Object OBJ(GFX);
@@ -53,6 +53,7 @@ s32 main(s32 argc, const char* argv[]){
 
 	exitapp = 1;
 	int frame=0;
+/*
 	while(exitapp){
 		static time_t starttime = 0;
 		double fps = 0;
@@ -78,6 +79,7 @@ s32 main(s32 argc, const char* argv[]){
 		GFX->Flip();
 		frame ++;
 	}
+*/
 end:
 	K.Dialog(MSG_DIALOG_BTN_TYPE_YESNO,"cool MSG Dialog works! Press Y to exit! deroad is cool");
 

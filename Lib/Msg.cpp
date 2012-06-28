@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MSG_DIALOG_FONT_SIZE		15
+#define MSG_DIALOG_FONT_SIZE		14
 
 static s32 dialog_action = 0;
 
@@ -40,23 +40,16 @@ MsgDialog::MsgDialog(Minimum *g){
 	for(s32 i = 0; i < G->width; i++){
 		bitmap[x+i] = 0x2f1e24;
 		bitmap[x+i+G->width] = 0x4d4b50;
-		bitmap[x+i+G->width*2] = 0xb7b5ba;
-		bitmap[x+i+G->width*3] = 0xccc7cd;
-		bitmap[x+i+G->width*4] = 0xcbc5c9;
-		bitmap[x+i+G->width*5] = 0x958a90;
-		bitmap[x+i+G->width*6] = 0x4c474d;
-
+		bitmap[x+i+G->width*2] = 0x958a90;
+		bitmap[x+i+G->width*3] = 0x4c474d;
 	}
 
 	x = ((G->height*7/8))*G->width; 
 	for(s32 i = 0; i < G->width; i++){
 		bitmap[x+i] = 0x2f1e24;
 		bitmap[x+i+G->width] = 0x4d4b50;
-		bitmap[x+i+G->width*2] = 0xb7b5ba;
-		bitmap[x+i+G->width*3] = 0xccc7cd;
-		bitmap[x+i+G->width*4] = 0xcbc5c9;
-		bitmap[x+i+G->width*5] = 0x958a90;
-		bitmap[x+i+G->width*6] = 0x4c474d;
+		bitmap[x+i+G->width*2] = 0x958a90;
+		bitmap[x+i+G->width*3] = 0x4c474d;
 	}
 
 }
@@ -108,12 +101,6 @@ int MsgDialog::Dialog(msgType md, const char *message){
 			}
 			flip();
 		}
-/*
-	while(1){
-		Draw_MSG_DIALOG();
-		flip(G->a);
-	}
-*/
 }
 
 int MsgDialog::GetResponse(s32 button){
