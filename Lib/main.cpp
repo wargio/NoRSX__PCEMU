@@ -19,13 +19,15 @@
 #include <time.h>
 #include <stdio.h>
 
+#include "Lib/io/pad.h"
+
+
 static int exitapp, xmbopen;
 
-/*
-MSG Dialog is not ready to be released
-*/
-
 s32 main(s32 argc, const char* argv[]){
+
+	padData paddata;
+	padInfo padinfo;
 	
 	NoRSX *GFX = new NoRSX(RESOLUTION_720x480); //set defined screen resolution You can change it to: 
 					             //RESOLUTION_720x480 | RESOLUTION_720x576 | RESOLUTION_1280x720 | RESOLUTION_1920x1080
@@ -34,6 +36,9 @@ s32 main(s32 argc, const char* argv[]){
 	Bitmap BMap(GFX);
 	Image IMG(GFX);
 	MsgDialog K(GFX);
+
+	ioPadInit(7);
+
 
 	NoRSX_Bitmap Precalculated_Layer;	
 	pngData png;
@@ -52,7 +57,6 @@ s32 main(s32 argc, const char* argv[]){
 
 	F2.PrintfToBitmap(10,100,&Precalculated_Layer,COLOR_RED,"Screen %d x %d",GFX->width,GFX->height);
 	F2.PrintfToBitmap(10,150,&Precalculated_Layer,COLOR_BLUE, 30,"Press ESC to exit!");
-	SDL_Event event;
 
 	exitapp = 1;
 	int frame=0;
@@ -61,20 +65,19 @@ s32 main(s32 argc, const char* argv[]){
 		double fps = 0;
 		if (starttime == 0) starttime = time (NULL);
 		else fps = frame / difftime (time (NULL), starttime);
-		while(SDL_PollEvent(&event)){
-			if(event.type == SDL_QUIT){
-				return 0;
-			}
-			if( event.type == SDL_KEYDOWN){
-				switch( event.key.keysym.sym){
-					case SDLK_ESCAPE:{
-						goto end;
-					}
 
+		ioPadGetInfo(&padinfo);
+		for(int i=0;i<MAX_PADS;i++){
+			if(padinfo.status[i]){
+				ioPadGetData(i,&paddata);
+				if(paddata.BTN_CROSS){
+					return 1;
+				}
+				else if(paddata.BTN_CIRCLE){
+					return 1;
 				}
 			}
 		}
-
 		BMap.DrawBitmap(&Precalculated_Layer);
 		F2.Printf(50,400,"FPS %f", fps);
 
@@ -82,12 +85,13 @@ s32 main(s32 argc, const char* argv[]){
 		frame ++;
 	}
 end:
-	K.Dialog(MSG_DIALOG_BTN_TYPE_YESNO,"cool MSG Dialog works! Press Y to exit! deroad is cool");
+//	K.Dialog(MSG_DIALOG_BTN_TYPE_YESNO,"cool MSG Dialog works! Press Y to exit! deroad is cool");
 
 	//You need to clean the Bitmap before exit
 	BMap.ClearBitmap(&Precalculated_Layer);
 
 	GFX->NoRSX_Exit();
+	ioPadEnd();
 	return 0;
 }
 

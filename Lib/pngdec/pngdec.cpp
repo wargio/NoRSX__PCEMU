@@ -13,48 +13,19 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
  This program was created by Grazioli Giovanni Dante <wargio@libero.it>.
-
 */
 
-
-#ifndef __NORSX_MAIN_H__
-#define __NORSX_MAIN_H__
-
-#include "Image.h"
-#include "Background.h"
-#include "Objects.h"
-#include "Font.h"
-#include "Msg.h"
-#include "Bitmap.h"
-#include "Animation.h"
-
+#include "pngdec.h"
 #include <stdio.h>
-#include <malloc.h>
-#include <string.h>
-#include <assert.h>
-#include <unistd.h>
-#include "rsxutil.h"
 
-#define RESOLUTION_1920x1080		1
-#define RESOLUTION_1280x720		2
-#define RESOLUTION_720x576		5
-#define RESOLUTION_720x480		4
-
-
-class NoRSX : public Minimum{
-public:
-
-	 NoRSX();
-	 NoRSX(int id_type);
-	~NoRSX();
+void pngLoadFromFile(const char* filename, pngData *png){
+	SDL_Surface *img = IMG_Load(filename);
+	png->surface = SDL_DisplayFormatAlpha(img);
 	
-	void Flip();
-	void NoRSX_Exit();
-
-protected:
-	void *host_addr;
-	int id_scr;
-};
-
-#endif
+	png->bmp_out = png->surface->pixels;
+	png->width  = png->surface->w;
+	png->height = png->surface->h;
+	png->pitch  = png->surface->pitch;
+	SDL_FreeSurface(img);
+}
 

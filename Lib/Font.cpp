@@ -270,10 +270,15 @@ void Font::FontDrawBitmap(FT_Bitmap *bitmap, s32 offset, s32 top){
 	FT_Int y_max = top + bitmap->rows;
 	u32 M_width = m->width;
 	u32 M_height = m->height;
+	
+	if(y_max >= (s32)M_height)
+		y_max = M_height;
+
+	if(x_max >= (s32)M_width)
+		x_max = M_width;
+
 	for(x = offset, i = 0; x < x_max; x++, i++){
-		if(x >= (s32)M_width) break;
 		for(y = top, j = 0; y < y_max; y++, j++){
-			if(y >= (s32)M_height) break;
 			color = bitmap->buffer[bitmap->width * j + i];
 			if(CHROMAKEY!=color)
 				*(m->buffers[m->currentBuffer].ptr + m->width * y + x) = FontColor;
@@ -397,12 +402,18 @@ void Font::FontDrawBitmapToBitmap(FT_Bitmap *bitmap, NoRSX_Bitmap* bmap, s32 off
 	u32 M_width = m->width;
 	u32 M_height = m->height;
 
+	if(y_max >= (s32)M_height)
+		y_max = M_height;
+
+	if(x_max >= (s32)M_width)
+		x_max = M_width;
+
+
 	for(x = offset, i = 0;x < x_max;x++, i++ ){
-		if(x >= (s32)M_width)break;
 		for(y = top, j = 0;y < y_max;y++, j++ ){
-			if(y >= (s32) M_height) break;
-			if(CHROMAKEY!=bitmap->buffer[bitmap->width * j + i])
-				*(bmap->bitmap + m->width * y + x) = FontColor;
+			if(CHROMAKEY!=bitmap->buffer[bitmap->width*j+i])
+				*(bmap->bitmap+m->width*y+x) = FontColor;
+
 		}
 	}
 }

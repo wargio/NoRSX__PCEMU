@@ -33,11 +33,12 @@ public:
 
 	void RectangleToBitmap(u32 X, u32 Y, u32 width, u32 height, u32 Color, NoRSX_Bitmap *a);
 	void CircleToBitmap(u32 X, u32 Y, u32 r, u32 Color, NoRSX_Bitmap *a);
+	int Pixel(u32 X, u32 Y, u32 Color);
 	
 	
 private:
 	Minimum *G;
-	int Pixel(u32 X, u32 Y, u32 Color);
+//	int Pixel(u32 X, u32 Y, u32 Color);
 	int PixelToBuffer(u32 X, u32 Y, u32 Color, NoRSX_Bitmap *a);
 };
 

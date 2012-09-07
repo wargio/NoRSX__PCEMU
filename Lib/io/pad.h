@@ -15,13 +15,50 @@
  This program was created by Grazioli Giovanni Dante <wargio@libero.it>.
 */
 
-#include "pngdec.h"
+#ifndef __IO_PAD_H__
+#define __IO_PAD_H__
 
-void pngLoadFromFile(const char* filename, pngData *png){
-	png->surface = IMG_Load(filename);
-	png->bmp_out = (void*) png->surface->pixels;
-	png->width  = png->surface->w;
-	png->height = png->surface->h;
-	png->pitch  = png->surface->pitch;
-}
+#define MAX_PADS	127
 
+#define MAX_NEW_PADS	7
+
+#define PAD_INIT	0
+#define PAD_STOP	-1
+
+typedef struct {
+	int BTN_TRIANGLE;
+	int BTN_CIRCLE;
+	int BTN_SQUARE;
+	int BTN_CROSS;
+
+	int BTN_SELECT;
+	int BTN_START;
+
+	int BTN_UP;
+	int BTN_DOWN;
+	int BTN_LEFT;
+	int BTN_RIGHT;
+
+	int BTN_L1;
+	int BTN_L2;
+	int BTN_L3;
+
+	int BTN_R1;
+	int BTN_R2;
+	int BTN_R3;
+
+} padData;
+
+typedef struct {
+	int button;
+	int status[MAX_PADS];
+} padInfo;
+
+int ioPadInit(int);
+int ioPadEnd();
+
+void ioPadGetInfo(padInfo *PadInfo);
+void ioPadGetData(int NumPad, padData *PadData);
+
+
+#endif

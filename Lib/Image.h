@@ -18,8 +18,8 @@
 #ifndef __NORSX_IMAGE_H__
 #define __NORSX_IMAGE_H__
 
-#include "pngdec.h"
-#include "jpgdec.h"
+#include "pngdec/pngdec.h"
+#include "jpgdec/jpgdec.h"
 //#include <sysutil/sysutil.h>
 //#include <sysmodule/sysmodule.h>
 #include "Min.h"

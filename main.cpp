@@ -15,14 +15,22 @@
  This program was created by Grazioli Giovanni Dante <wargio@libero.it>.
 */
 
-#include "Lib/NoRSX.h"
+#include <NoRSX.h>
 #include <time.h>
 #include <stdio.h>
+
+#include <io/pad.h>
 
 static int exitapp, xmbopen;
 
 
 s32 main(s32 argc, const char* argv[]){
+
+	padData paddata;
+	padInfo padinfo;
+
+	ioPadInit(7);
+
 	
 	NoRSX *GFX = new NoRSX(RESOLUTION_1280x720); //set defined screen resolution You can change it to: 
 					             //RESOLUTION_720x480 | RESOLUTION_720x576 | RESOLUTION_1280x720 | RESOLUTION_1920x1080
@@ -31,6 +39,11 @@ s32 main(s32 argc, const char* argv[]){
 	Bitmap BMap(GFX);
 	Image IMG(GFX);
 	MsgDialog K(GFX);
+//	Animation An(GFX); //animation
+
+//	NoRSX_Animation TestAni; //define an animation struct
+
+//	An.LoadAnimation(11,50,100,&ani,&TestAni); //Load the animation struct by saying (Frame_max_num, frame_width, frame_height, ChromaKey, pngData* or jpgData*, NoRSX_Animation *);
 
 	NoRSX_Bitmap Precalculated_Layer;	
 	pngData png;
@@ -49,44 +62,52 @@ s32 main(s32 argc, const char* argv[]){
 
 	F2.PrintfToBitmap(10,100,&Precalculated_Layer,COLOR_RED,"Screen %d x %d",GFX->width,GFX->height);
 	F2.PrintfToBitmap(10,150,&Precalculated_Layer,COLOR_BLUE, 30,"Press ESC to exit!");
-	SDL_Event event;
 
 	exitapp = 1;
 	int frame=0;
-/*
 	while(exitapp){
 		static time_t starttime = 0;
 		double fps = 0;
 		if (starttime == 0) starttime = time (NULL);
 		else fps = frame / difftime (time (NULL), starttime);
-		while(SDL_PollEvent(&event)){
-			if(event.type == SDL_QUIT){
-				return 0;
-			}
-			if( event.type == SDL_KEYDOWN){
-				switch( event.key.keysym.sym){
-					case SDLK_ESCAPE:{
-						goto end;
-					}
 
+		ioPadGetInfo(&padinfo);
+		for(int i=0;i<MAX_PADS;i++){
+			if(padinfo.status[i]){
+				ioPadGetData(i,&paddata);
+				if(paddata.BTN_CROSS){        //ENTER
+					goto end;
+				}
+				else if(paddata.BTN_CIRCLE){  //ESC
+					goto end;
 				}
 			}
 		}
-
+/*
+		if(frame%6==0){
+			frame_an++;
+			if(frame_an>9 || frame_an <0)
+				frame_an = 0;
+		}
+*/
 		BMap.DrawBitmap(&Precalculated_Layer);
-		F2.Printf(50,400,"FPS %f", fps);
+		F2.Printf(50,400,0xffffff,30,"FPS %.2f", fps);
+	//	An.AlphaDrawAnimation(100,250,frame_an, &TestAni); //draw the frame (x,y,frame_number, NoRSX_Animation *);
 
 		GFX->Flip();
 		frame ++;
 	}
-*/
 end:
 	K.Dialog(MSG_DIALOG_BTN_TYPE_YESNO,"cool MSG Dialog works! Press Y to exit! deroad is cool");
 
 	//You need to clean the Bitmap before exit
 	BMap.ClearBitmap(&Precalculated_Layer);
 
+	//You need to clean the Animation before exit
+//	An.CleanAnimation(&TestAni);
+
 	GFX->NoRSX_Exit();
+	ioPadEnd();
 	return 0;
 }
 

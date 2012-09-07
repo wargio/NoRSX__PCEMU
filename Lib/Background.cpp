@@ -16,43 +16,82 @@
 */
 
 #include "Background.h"
-#include <math.h>
+
+#define COLOR_TO_ARGB(alpha, red, green, blue) (((alpha) << 24) | ((red) << 16) | ((green) << 8) | (blue))
+#define COLOR_TO_RGB(red, green, blue) (((red) << 16) | ((green) << 8) | (blue))
+
+#define VALUE_TO_ARGB(value) (((value) << 24) | ((value) << 16) | ((value) << 8) | (value))
+#define VALUE_TO_RGB(value) (((value) << 16) | ((value) << 8) | (value))
+
+#define A(argb)  (((argb) >> 24) & 0xFF)
+#define R(argb)  (((argb) >> 16) & 0xFF)
+#define G(argb)  (((argb) >>  8) & 0xFF)
+#define B(argb)  ((argb)         & 0xFF)
 
 Background::Background(Minimum *g){
 	G=g;
 	frame=0;
 }
 
-void Background::Mono(s32 Color){
+void Background::Mono(u32 Color){
 	s32 size = G->buffers[G->currentBuffer].height * G->buffers[G->currentBuffer].width;
-	for(s32 i = 0; i < size; i++){
-		G->buffers[G->currentBuffer].ptr[i] = Color;
+	for(s32 i = 0; i < size; i++) {
+	G->buffers[G->currentBuffer].ptr[i] = Color;
 	}
 }
 
-void Background::MonoBitmap(s32 Color, NoRSX_Bitmap *a){
+void Background::MonoBitmap(u32 Color, NoRSX_Bitmap *a){
 	s32 size = G->buffers[G->currentBuffer].height * G->buffers[G->currentBuffer].width;
 	for(s32 i = 0; i < size; i++) {
 		a->bitmap[i] = Color;
 	}
 }
 
-void Background::UpDownGradient(s32 Color1, s32 Color2){
+
+void Background::Gradient(u32 Color1, u32 Color2){ //G->buffers[G->currentBuffer].ptr[i]
 	s32 size = G->buffers[G->currentBuffer].height * G->buffers[G->currentBuffer].width;
+	u8 Color_Red   = R(Color2);
+	u8 Color_Blue  = B(Color2);
+	u8 Color_Green = G(Color2);
+
+	u8 Color1_Red   = R(Color1);
+	u8 Color1_Blue  = B(Color1);
+	u8 Color1_Green = G(Color1);
+	int percent_old = 0;
 	for(s32 i = 0; i < size; i++){
-		s32 Color = Color1*i/100 + Color2*(100-i)/100;
-		G->buffers[G->currentBuffer].ptr[i] = Color;
+		int percent = (i*100)/size;
+		u8 red   = (Color1_Red  *(100-percent)/100) + (Color_Red  *percent/100);
+		u8 blue  = (Color1_Blue *(100-percent)/100) + (Color_Blue *percent/100);
+		u8 green = (Color1_Green*(100-percent)/100) + (Color_Green*percent/100);
+
+		G->buffers[G->currentBuffer].ptr[i] = COLOR_TO_RGB(red,green,blue);
+		if(percent_old!=percent){
+			percent_old = percent;
+		}
 	}
 }
 
-void Background::UpDownGradientBitmap(s32 Color1, s32 Color2, NoRSX_Bitmap *a){
+void Background::GradientBitmap(u32 Color1, u32 Color2, NoRSX_Bitmap *a){
 	s32 size = G->buffers[G->currentBuffer].height * G->buffers[G->currentBuffer].width;
-	s32 Color = Color1+ Color2;
-	for(s32 i = 0; i < size; i++){
-		a->bitmap[i] = Color;
-		if(i%(size/1000)==0) Color = Color1*(i%size) + Color2*(i%size);
+	u8 Color_Red   = R(Color2);
+	u8 Color_Blue  = B(Color2);
+	u8 Color_Green = G(Color2);
+
+	u8 Color1_Red   = R(Color1);
+	u8 Color1_Blue  = B(Color1);
+	u8 Color1_Green = G(Color1);
+	int percent_old = 0;
+	for(u32 i = 0; i < size; i++){
+		int percent = (i*100)/size;
+		u8 red   = (Color1_Red  *(100-percent)/100) + (Color_Red  *percent/100);
+		u8 blue  = (Color1_Blue *(100-percent)/100) + (Color_Blue *percent/100);
+		u8 green = (Color1_Green*(100-percent)/100) + (Color_Green*percent/100);
+
+		a->bitmap[i] = COLOR_TO_RGB(red,green,blue);
+		if(percent_old!=percent){
+			percent_old = percent;
+		}
 	}
 }
-
 
 
