@@ -7,6 +7,10 @@ Authors
 
 Changelog:
 ----------
+	- 0.0.5 -
+		Rewritten Makefile
+		Added Image Resize
+		Added NoRSX PS3 Version Patches
 	- 0.0.4 -
 		Added -I flag to the Makefile
 		Fixed PNG loading

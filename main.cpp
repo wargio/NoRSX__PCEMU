@@ -46,17 +46,19 @@ s32 main(s32 argc, const char* argv[]){
 //	An.LoadAnimation(11,50,100,&ani,&TestAni); //Load the animation struct by saying (Frame_max_num, frame_width, frame_height, ChromaKey, pngData* or jpgData*, NoRSX_Animation *);
 
 	NoRSX_Bitmap Precalculated_Layer;	
-	pngData png;
+	pngData *png = new pngData;
 	BMap.GenerateBitmap(&Precalculated_Layer); //Initialize the Bitmap
 	
 	Font F2("data/Sans.ttf" ,GFX);  //Loaded from File!
 
-	IMG.LoadPNG("data/NoRSX_Image.png", &png);
-	u32 imgX =(GFX->width/2)-(png.width/2), imgY = (GFX->height/2)-(png.height/2);
+	IMG.LoadPNG("data/NoRSX_Image.png", png);
+	png = IMG.ResizeImage(png, 500, 500); //ResizeImage(pngData*, new width, new height)
+
+	u32 imgX =(GFX->width/2)-( png->width/2), imgY = (GFX->height/2)-( png->height/2);
 	
 	BG.MonoBitmap(0xb4e83a,&Precalculated_Layer); //a green hex color (you can use hex colors insted of COLOR_XXXXXXX)
 
-	IMG.DrawIMGtoBitmap(imgX,imgY,&png,&Precalculated_Layer);
+	IMG.DrawIMGtoBitmap(imgX,imgY,png,&Precalculated_Layer);
 
 	OBJ.CircleToBitmap(100,100,50,COLOR_YELLOW,&Precalculated_Layer);
 
@@ -91,14 +93,13 @@ s32 main(s32 argc, const char* argv[]){
 		}
 */
 		BMap.DrawBitmap(&Precalculated_Layer);
-		F2.Printf(50,400,0xffffff,30,"FPS %.2f", fps);
+		F2.Printf(50,400,0,30,"FPS %.2f", fps);
 	//	An.AlphaDrawAnimation(100,250,frame_an, &TestAni); //draw the frame (x,y,frame_number, NoRSX_Animation *);
 
 		GFX->Flip();
 		frame ++;
 	}
 end:
-	K.Dialog(MSG_DIALOG_BTN_TYPE_YESNO,"cool MSG Dialog works! Press Y to exit! deroad is cool");
 
 	//You need to clean the Bitmap before exit
 	BMap.ClearBitmap(&Precalculated_Layer);
@@ -110,4 +111,5 @@ end:
 	ioPadEnd();
 	return 0;
 }
+
 

@@ -1,17 +1,20 @@
-OBJS   =	Lib/Image.cpp Lib/Background.cpp  Lib/rsxutil.cpp Lib/Bitmap.cpp Lib/NoRSX.cpp Lib/Font.cpp Lib/Min.cpp Lib/Objects.cpp Lib/Animation.cpp Lib/Msg.cpp 
+CC	= g++
+CFLAGS	= `sdl-config --cflags` -I"Lib/" -I"./"
+LDLIBS	= `sdl-config --libs` -lfreetype -lSDL_image -I"Lib/"
 
-#some libs
-OBJS  +=	Lib/pngdec/pngdec.cpp Lib/jpgdec/jpgdec.cpp Lib/io/pad.cpp 
-#main
-OBJS  +=	main.cpp
+FILES	=	Lib/Animation Lib/Font Lib/Min  Lib/Objects Lib/Background  Lib/Image  Lib/Msg  Lib/rsxutil Lib/Bitmap  Lib/NoRSX Lib/io/pad Lib/jpgdec/jpgdec Lib/pngdec/pngdec
 
-CC	=  g++
-CFLAGS	=  `sdl-config --cflags`
-LDLIBS  =  `sdl-config --libs` -lfreetype -lSDL_image -I"Lib/"
+OBJ 	=	$(addsuffix .o, $(FILES))
 
+FILES	+=	main
 
-all: $(OBJS) 
-	$(CC) $(CFLAGS) -o NoRSX_EMU $(OBJS) $(LDLIBS) 
+all: $(OBJ)
+	$(CC) -o NoRSX_EMU $(OBJ) $(LDLIBS)
+
+$(OBJ): %.o: %.cpp
+	@echo "CC " $@
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	-rm -f NoRSX_EMU
+	@echo "clean.."
+	@rm -rf NoRSX_EMU Lib/*.o Lib/*/*.o *.o
