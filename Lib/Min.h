@@ -26,6 +26,9 @@ public:
 	rsxBuffer buffers[2];
 	int currentBuffer;
 	SDL_Surface *a;
+	
+	uint32_t *buffer;
+	uint32_t buffer_size;
 };
 
 #endif

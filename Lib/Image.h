@@ -50,6 +50,7 @@ public:
 	void AlphaDrawIMGtoBitmap(int x, int y, pngData *png1, NoRSX_Bitmap *a);
 	
 	pngData *ResizeImage(pngData *png_in, u32 TgtWidth, u32 TgtHeight); //Thanks to: http://www.compuphase.com/graphic/scale.htm
+	jpgData *ResizeImage(jpgData *jpg_in, u32 TgtWidth, u32 TgtHeight); //Thanks to: http://www.compuphase.com/graphic/scale.htm
 
 protected:
 	Minimum *G;

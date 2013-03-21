@@ -371,6 +371,10 @@ void Font::PrintfToBitmap(u32 x, u32 y, NoRSX_Bitmap* bmap, u32 Color, u32 Size,
 }
 
 void Font::FontDrawBitmap(FT_Bitmap *bitmap, s32 offset, s32 top){
+	if(offset<0)
+		offset = 0;
+	if(top<0)
+		top = 0;
 
 	FT_Int x, y, i, j;
 	FT_Int x_max = offset + bitmap->width;
@@ -378,7 +382,7 @@ void Font::FontDrawBitmap(FT_Bitmap *bitmap, s32 offset, s32 top){
 	u32 M_width = m->width;
 	u32 M_height = m->height;
 
-	u32 *ptr = m->buffers[m->currentBuffer].ptr;
+	u32 *ptr = m->buffer;
 
 
 	if(y_max >= (s32)M_height)
@@ -386,16 +390,20 @@ void Font::FontDrawBitmap(FT_Bitmap *bitmap, s32 offset, s32 top){
 	if(x_max >= (s32)M_width)
 		x_max = M_width;
 
-	for(x = offset, i = 0;x < x_max;x++, i++ ){
-		for(y = top, j = 0;y < y_max;y++, j++ ){
+	for(x = offset, i = 0;x < x_max; ++x, ++i ){
+		for(y = top, j = 0;y < y_max;++y, ++j ){
 			u32 color = bitmap->buffer[bitmap->width * j + i];
-			if(color>0x30)
+			if(color>0x90)
 				ptr[m->width * y + x] = ((color)*0x01010101)&FontColor;
 		}
 	}
 }
 
 void Font::FontDrawBitmapToBitmap(FT_Bitmap *bitmap, NoRSX_Bitmap* bmap, s32 offset, s32 top){
+	if(offset<0)
+		offset = 0;
+	if(top<0)
+		top = 0;
 
 	FT_Int x, y, i, j;
 	FT_Int x_max = offset + bitmap->width;
@@ -413,7 +421,7 @@ void Font::FontDrawBitmapToBitmap(FT_Bitmap *bitmap, NoRSX_Bitmap* bmap, s32 off
 	for(x = offset, i = 0;x < x_max;x++, i++ ){
 		for(y = top, j = 0;y < y_max;y++, j++ ){
 			u32 color = bitmap->buffer[bitmap->width * j + i];
-			if(color>0xa0)
+			if(color>0x90)
 				ptr[m->width * y + x] = ((color)*0x01010101)&FontColor;
 		}
 	}

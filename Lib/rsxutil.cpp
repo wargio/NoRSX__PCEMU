@@ -40,6 +40,12 @@ int flip(SDL_Surface *a){
 	SDL_Flip(a);
 }
 
+u32 *makeMemBuffer(u16 width, u16 height, u32 *buffer_size){
+	u32 size = width * height * sizeof(u32);
+	*buffer_size = size;
+	return (u32*) malloc(size);
+}
+
 int makeBuffer(rsxBuffer * buffer, u16 width, u16 height, SDL_Surface *id){
 	SDL_Init(SDL_INIT_EVERYTHING);
 	atexit(SDL_Quit);

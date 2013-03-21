@@ -41,7 +41,8 @@ typedef struct
   uint32_t offset;
 } rsxBuffer;
 
-
+/* Make a Memory Buffer. */
+u32 *makeMemBuffer(u16 width, u16 height, u32 *buffer_size);
 /* Flip a buffer onto the screen. Returns TRUE on success */
 int flip();
 int flip(SDL_Surface *a);

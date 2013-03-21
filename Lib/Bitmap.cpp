@@ -43,6 +43,7 @@ void Bitmap::RegenBitmap(NoRSX_Bitmap *a){
 void Bitmap::DrawBitmap(NoRSX_Bitmap *a){
 	if(a->load==1){
 		s32 size = G->height * G->width * sizeof(u32);
-		memcpy(G->buffers[G->currentBuffer].ptr,a->bitmap,size);
+		memcpy(G->buffer,a->bitmap,size);
 	}
 }
+
