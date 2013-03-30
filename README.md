@@ -7,6 +7,8 @@ Authors
 
 Changelog:
 ----------
+	- 0.0.7 -
+		Added NoRSX 0.3.0 Heap Fix
 	- 0.0.6 -
 		Added new NoRSX 0.2.9 (PS3 Version) functions
 	- 0.0.5 -

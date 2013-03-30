@@ -1,5 +1,5 @@
 CC	= g++
-CFLAGS	= `sdl-config --cflags` -I"Lib/" -I"./"
+CFLAGS	= `sdl-config --cflags` -I"Lib/" -I"./" -I"/usr/include/freetype2/" 
 LDLIBS	= `sdl-config --libs` -lfreetype -lSDL_image -I"Lib/"
 
 FILES	=	Lib/Animation Lib/Font Lib/Min  Lib/Objects Lib/Background  Lib/Image  Lib/Msg  Lib/rsxutil Lib/Bitmap  Lib/NoRSX Lib/io/pad Lib/jpgdec/jpgdec Lib/pngdec/pngdec
@@ -17,4 +17,4 @@ $(OBJ): %.o: %.cpp
 
 clean:
 	@echo "clean.."
-	@rm -rf NoRSX_EMU Lib/*.o Lib/*/*.o *.o
+	@rm -rf NoRSX_EMU Lib/*.o Lib/*/*.o *.o Lib/*~ Lib/*/*~ *~
